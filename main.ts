@@ -122,5 +122,6 @@ namespace joystickbit {
     //% weight=95
     export function playMelody(melody: string): void {
         radio.sendValue(melody, 0)
+        console.log(melody)
     }
 }
