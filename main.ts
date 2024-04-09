@@ -94,7 +94,7 @@ namespace joystickbit {
             recieved = receivedString
             console.log(recieved)
         })
-        basic.forever(function() {
+        basic.forever(function () {
             radio.sendNumber(0)
         })
     }
@@ -106,8 +106,21 @@ namespace joystickbit {
     }
     //% block="get joystick value, axis $axis"
     //% block.loc.cs="hodnota joysticku, osa $axis"
-    //% weight=98
+    //% weight=97
     export function getJoystickValue(axis: Axis): number {
         return parseInt(recieved.split(":")[axis])
+    }
+    //% block="vibrate for $time ms"
+    //% block.loc.cs="vibrovat po $time ms"
+    //% weight=96
+    export function vibrate(time: number): void {
+        radio.sendValue("v", time)
+    }
+    //% block="play melody $melody"
+    //% block.loc.cs="zahrát melodii $melody"
+    //% melody.shadow="melody_editor"
+    //% weight=95
+    export function playMelody(melody: string): void {
+        radio.sendValue(melody, 0)
     }
 }
