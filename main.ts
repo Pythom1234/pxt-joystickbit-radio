@@ -40,7 +40,7 @@ namespace joystickbit {
         radio.onReceivedNumber(function (receivedNumber: number) {
             led.plotBarGraph(radio.receivedPacket(RadioPacketProperty.SignalStrength) + 128, 100)
         })
-        radio.onReceivedValue(function(name: string, value: number) {
+        radio.onReceivedValue(function (name: string, value: number) {
             if (name == "v") {
                 pins.digitalWritePin(DigitalPin.P16, 0)
                 basic.pause(value)
@@ -88,12 +88,12 @@ namespace joystickbit {
     //% weight=99
     export function init(address: number): void {
         radio.setGroup(address)
-        radio.onReceivedString(function(receivedString: string) {
+        radio.onReceivedString(function (receivedString: string) {
             lastRecieved = recieved
             recieved = receivedString
             console.log(recieved)
         })
-        control.inBackground(function() {
+        control.inBackground(function () {
             while (true) {
                 radio.sendNumber(0)
             }
