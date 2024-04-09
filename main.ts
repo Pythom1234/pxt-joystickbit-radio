@@ -86,6 +86,7 @@ namespace joystickbit {
         radio.onReceivedString(function(receivedString: string) {
             lastRecieved = recieved
             recieved = receivedString
+            console.log(recieved)
         })
         control.inBackground(function() {
             radio.sendNumber(0)
