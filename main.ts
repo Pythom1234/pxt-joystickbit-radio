@@ -93,7 +93,6 @@ namespace joystickbit {
         radio.onReceivedString(function (receivedString: string) {
             lastRecieved = recieved
             recieved = receivedString
-            console.log(recieved)
         })
         basic.forever(function () {
             radio.sendNumber(0)
