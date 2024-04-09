@@ -1,8 +1,22 @@
 //% block="Joystick:bit" color=#984611 icon="\uf11b"
 namespace joystickbit {
+    export enum Buttons {
+        A = 0,
+        B = 1,
+        C = 2,
+        D = 3,
+        E = 4,
+        F = 5,
+        Logo = 6
+    }
+    let lastRecieved = "0000000:512:512"
+    let recieved = "0000000:512:512"
     //% block="run service on joystickbit on radio address $address"
     //% block.loc.cs="spustit službu na joystickbit na rádio adrese $address"
-    export function runService(address: number) {
+    //% address.min=0
+    //% address.max=255
+    //% weight=100
+    export function runService(address: number): void {
         const buttonPins: DigitalPin[] = [DigitalPin.P12, DigitalPin.P13, DigitalPin.P14, DigitalPin.P15]
         pins.digitalWritePin(DigitalPin.P0, 0)
         pins.setPull(DigitalPin.P12, PinPullMode.PullUp)
@@ -61,5 +75,26 @@ namespace joystickbit {
             radio.sendString(toSend)
             basic.pause(10)
         }
+    }
+    //% block="init reciever on radio address $address"
+    //% block.loc.cs="inicializovat přijímač na rádio adrese $address"
+    //% address.min=0
+    //% address.max=255
+    //% weight=99
+    export function init(address: number): void {
+        radio.setGroup(address)
+        radio.onReceivedString(function(receivedString: string) {
+            lastRecieved = recieved
+            recieved = receivedString
+        })
+        control.inBackground(function() {
+            radio.sendNumber(0)
+        })
+    }
+    //% block="is pressed button $button"
+    //% block.loc.cs="je stisknuto tlačítko $button"
+    //% weight=98
+    export function getButton(button: Buttons): boolean {
+        return recieved[button] == "1"
     }
 }
