@@ -47,7 +47,7 @@ namespace joystickbit {
                 basic.pause(value)
                 pins.digitalWritePin(DigitalPin.P16, 1)
             } else {
-                music.stringPlayable(name, 120)
+                music.play(music.stringPlayable(name, 120), music.PlaybackMode.InBackground)
             }
         })
         while (true) {
