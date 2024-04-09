@@ -20,6 +20,7 @@ namespace joystickbit {
     //% address.min=0
     //% address.max=255
     //% weight=100
+    //% blockGap=50
     export function runService(address: number): void {
         radio.setGroup(address)
         const buttonPins: DigitalPin[] = [DigitalPin.P12, DigitalPin.P13, DigitalPin.P14, DigitalPin.P15]
