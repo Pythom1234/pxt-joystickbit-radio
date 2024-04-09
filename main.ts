@@ -96,7 +96,7 @@ namespace joystickbit {
         control.inBackground(function () {
             while (true) {
                 radio.sendNumber(0)
-                control.waitMicros(100)
+                control.waitMicros(100000)
             }
         })
     }
