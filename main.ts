@@ -46,9 +46,10 @@ namespace joystickbit {
                 pins.digitalWritePin(DigitalPin.P16, 0)
                 basic.pause(value)
                 pins.digitalWritePin(DigitalPin.P16, 1)
-            } else {
-                music.play(music.stringPlayable(name, 120), music.PlaybackMode.InBackground)
             }
+        })
+        radio.onReceivedString(function(receivedString: string) {
+            music.play(music.stringPlayable(receivedString, 160),music.PlaybackMode.InBackground)
         })
         while (true) {
             let toSend: string = ""
@@ -121,7 +122,6 @@ namespace joystickbit {
     //% melody.shadow="melody_editor"
     //% weight=95
     export function playMelody(melody: string): void {
-        radio.sendValue(melody, 0)
-        console.log(melody)
+        radio.sendString(melody)
     }
 }
