@@ -9,8 +9,12 @@ namespace joystickbit {
         F = 5,
         Logo = 6
     }
-    let lastRecieved = "0000000:512:512"
-    let recieved = "0000000:512:512"
+    export enum Axis {
+        X = 1,
+        Y = 2
+    }
+    export let lastRecieved = "0000000:512:512"
+    export let recieved = "0000000:512:512"
     //% block="run service on joystickbit on radio address $address"
     //% block.loc.cs="spustit službu na joystickbit na rádio adrese $address"
     //% address.min=0
@@ -90,7 +94,9 @@ namespace joystickbit {
             console.log(recieved)
         })
         control.inBackground(function() {
-            radio.sendNumber(0)
+            while (true) {
+                radio.sendNumber(0)
+            }
         })
     }
     //% block="is pressed button $button"
@@ -98,5 +104,11 @@ namespace joystickbit {
     //% weight=98
     export function getButton(button: Buttons): boolean {
         return recieved[button] == "1"
+    }
+    //% block="get joystick value, axis $axis"
+    //% block.loc.cs="hodnota joysticku, osa $axis"
+    //% weight=98
+    export function getJoystickValue(axis: Axis): number {
+        return parseInt(recieved.split(":")[axis])
     }
 }
