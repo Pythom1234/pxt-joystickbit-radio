@@ -47,13 +47,6 @@ namespace joystickbit {
         })
         while (true) {
             let toSend: string = ""
-            for (let pin of buttonPins) {
-                if (pins.digitalReadPin(pin) == 0) {
-                    toSend += "1"
-                } else {
-                    toSend += "0"
-                }
-            }
             if (input.buttonIsPressed(Button.A)) {
                 toSend += "1"
             } else {
@@ -63,6 +56,13 @@ namespace joystickbit {
                 toSend += "1"
             } else {
                 toSend += "0"
+            }
+            for (let pin of buttonPins) {
+                if (pins.digitalReadPin(pin) == 0) {
+                    toSend += "1"
+                } else {
+                    toSend += "0"
+                }
             }
             if (input.logoIsPressed()) {
                 toSend += "1"
