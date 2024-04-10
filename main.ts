@@ -13,6 +13,12 @@ namespace joystickbit {
         X = 1,
         Y = 2
     }
+    export enum Actions {
+        //% block="press" block.loc.cs="stisknutí"
+        Pressed = 0,
+        //% block="release" block.loc.cs="uvolnění"
+        Released = 1
+    }
     export let lastRecieved = "0000000:512:512"
     export let recieved = "0000000:512:512"
     //% block="run service on joystickbit on radio address $address"
@@ -48,8 +54,8 @@ namespace joystickbit {
                 pins.digitalWritePin(DigitalPin.P16, 1)
             }
         })
-        radio.onReceivedString(function(receivedString: string) {
-            music.play(music.stringPlayable(receivedString, 160),music.PlaybackMode.InBackground)
+        radio.onReceivedString(function (receivedString: string) {
+            music.play(music.stringPlayable(receivedString, 160), music.PlaybackMode.InBackground)
         })
         while (true) {
             let toSend: string = ""
@@ -122,5 +128,22 @@ namespace joystickbit {
     //% weight=95
     export function playMelody(melody: string): void {
         radio.sendString(melody)
+    }
+    //% block="on $action button $button"
+    //% block.loc.cs="při $action tlačítka $button"
+    //% weight=94
+    export function onButton(button: Buttons, action: Actions, code: Action): void {
+        basic.forever(function() {
+            if (action == 0) {
+                if ((lastRecieved[button] == "0") && (recieved[button] == "1")) {
+                    code()
+                }
+            }
+            if (action == 1) {
+                if ((lastRecieved[button] == "1") && (recieved[button] == "0")) {
+                    code()
+                }
+            }
+        })
     }
 }
